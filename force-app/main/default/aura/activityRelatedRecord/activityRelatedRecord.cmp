@@ -1,0 +1,37 @@
+<aura:component controller="ActivityRelatedRecordController" implements="flexipage:availableForRecordHome,flexipage:availableForAllPageTypes,force:hasRecordId,force:appHostable" access="global">
+
+
+    <aura:attribute name="tasks" type="Task[]"/>
+    <aura:attribute name="selectedTaskId" type="String"/>
+    <aura:attribute name="selectedTask" type="Task"/>
+
+    <aura:handler name="init" value="{! this }" action="{! c.doInit }"/>
+
+    <lightning:card title="Actividades Relacionadas">
+        <div class="slds-p-around_medium">
+            <lightning:select name="activitySelect"
+                              label="Selecciona una Actividad"
+                              value="{! v.selectedTaskId }"
+                              onchange="{! c.handleTaskChange }">
+                <option value="">-- Selecciona --</option>
+                <aura:iteration items="{! v.tasks }" var="t">
+                    <aura:if isTrue="{! not(empty(t.Who)) }">
+                        <option value="{! t.Id }">{! t.Subject } - {! t.Who.Name }</option>
+                        <aura:set attribute="else">
+                            <option value="{! t.Id }">{! t.Subject } - Sin persona</option>
+                        </aura:set>
+                    </aura:if>
+                </aura:iteration>
+            </lightning:select>
+
+            <aura:if isTrue="{! not(empty(v.selectedTask)) }">
+                <div class="slds-m-top_medium">
+                    <p><strong>Asociado a (WhoId):</strong> {! v.selectedTask.Who.Name }</p>
+                    <p><strong>Relacionado con (WhatId):</strong> {! v.selectedTask.What.Name }</p>
+                    <p><strong>Fecha de vencimiento:</strong> {! v.selectedTask.ActivityDate }</p>
+                    <p><strong>Estado:</strong> {! v.selectedTask.Status }</p>
+                </div>
+            </aura:if>
+        </div>
+    </lightning:card>
+</aura:component>

@@ -1,0 +1,42 @@
+<apex:component controller="AccountDataController" access="global">
+
+    <apex:form >
+        <!-- Selector de cuentas -->
+        <apex:pageBlock title="Seleccionar Cuenta">
+            <apex:pageBlockSection columns="1">
+                <apex:actionRegion >
+                    <apex:selectList value="{!selectedAccountId}" size="1">
+                        <apex:selectOptions value="{!accountOptions}" />
+                        <!-- Al cambiar la selección se carga la data automáticamente -->
+                        <apex:actionSupport event="onchange" action="{!loadData}" rerender="infoBlock" />
+                    </apex:selectList>
+                </apex:actionRegion>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+
+        <!-- Panel que muestra la información de la cuenta, contactos y casos -->
+        <apex:outputPanel id="infoBlock" layout="block">
+            <apex:pageBlock title="Información de la Cuenta" rendered="{!selectedAccount != null}">
+                <apex:pageBlockSection columns="2">
+                    <apex:outputField value="{!selectedAccount.Name}" label="Nombre" />
+                    <apex:outputField value="{!selectedAccount.Phone}" label="Teléfono" />
+                    <apex:outputField value="{!selectedAccount.Type}" label="Tipo" />
+                    <apex:outputField value="{!selectedAccount.Industry}" label="Industria" />
+                </apex:pageBlockSection>
+
+                <apex:pageBlockTable value="{!contacts}" var="c" rendered="{!NOT(ISNULL(contacts))}">
+                    <apex:column value="{!c.Name}" headerValue="Contacto" />
+                    <apex:column value="{!c.Email}" headerValue="Correo" />
+                    <apex:column value="{!c.Phone}" headerValue="Teléfono" />
+                </apex:pageBlockTable>
+
+                <apex:pageBlockTable value="{!cases}" var="cs" rendered="{!NOT(ISNULL(cases))}">
+                    <apex:column value="{!cs.CaseNumber}" headerValue="Caso" />
+                    <apex:column value="{!cs.Subject}" headerValue="Asunto" />
+                    <apex:column value="{!cs.Status}" headerValue="Estado" />
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+        </apex:outputPanel>
+    </apex:form>
+
+</apex:component>
