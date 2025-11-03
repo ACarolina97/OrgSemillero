@@ -1,7 +1,7 @@
 /**
  * @description   Controlador Apex para gestionar las Oportunidades relacionadas a una Cuenta.
  *                Permite consultar oportunidades por AccountId y actualizar su estado (StageName).
- * @author        Tu Nombre
+ * @author        Astrid Leiva
  * @date          2025-11-02
  * @version       1.0
  */
