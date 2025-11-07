@@ -1,9 +1,3 @@
-/**
- * @description   Controlador Apex para buscar los contactos relaciaodos a las cuentas
- * @author        Astrid Leiva
- * @date          2025-11-02
- * @version       1.0
- */
 public with sharing class AccountContactSearchController {
 
     @AuraEnabled(cacheable=true)
